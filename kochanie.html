@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria z losowym zdjęciem</title>
+    <style>
+        body {
+            background-color: #f8d7da;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            font-size: 3em;
+            margin-top: 50px;
+            color: #d9534f;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        }
+        p {
+            font-size: 1.5em;
+            margin: 20px 0;
+            color: #555;
+            text-align: justify;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #d9534f;
+            color: white;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background-color: #c9302c;
+        }
+        img {
+            max-width: 400px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        #randomImageContainer {
+            margin-bottom: 20px; /* Dodatkowa przestrzeń między zdjęciem a przyciskami */
+        }
+        #randomImage {
+            display: block;
+            margin: 0 auto; /* Wyśrodkowanie zdjęcia */
+        }
+    </style>
+</head>
+<body>
+    <h1>Sabina kochanie moje</h1>
+    <p>Nie wyobrażam sobie życia bez ciebie, dziękuję za to, że jesteś, za wszystkie piękne chwile spędzone z tobą, za te głębsze jak i te mniej poważne rozmowy, za 
+    oparcie, które w tobie mam, za to, że dzięki tobie jestem najlepszą wersją siebie, nadajesz mi sens życia, kochanie moje.</p>
+
+    <!-- Miejsce na wyświetlenie losowego zdjęcia -->
+    <div id="randomImageContainer">
+        <img src="" alt="Losowe zdjęcie" id="randomImage" style="display: none;">
+    </div>
+
+    <!-- Pierwszy przycisk - otwiera galerię w nowym oknie -->
+    <button class="btn" onclick="openGallery()">Otwórz galerię</button>
+
+    <!-- Drugi przycisk - pokazuje losowe zdjęcie na tej samej stronie -->
+    <button class="btn" onclick="showRandomImage()">Pokaż losowe zdjęcie</button>
+
+    <h1>Kocham cię</h1>
+
+    <script>
+        // Tablica z obrazkami, które będą losowane
+        const images = [
+            '1.jpg',
+            '2.jpg',
+            '3.jpg'
+        ];
+
+        // Funkcja do pokazania losowego zdjęcia
+        function showRandomImage() {
+            // Losowanie indeksu z tablicy
+            const randomIndex = Math.floor(Math.random() * images.length);
+            const randomImage = images[randomIndex];
+
+            // Ustawienie źródła zdjęcia w elemencie img
+            const imageElement = document.getElementById('randomImage');
+            imageElement.src = randomImage;
+
+            // Pokazanie zdjęcia
+            imageElement.style.display = 'block';
+        }
+
+        // Funkcja do otwarcia galerii w nowym oknie
+        function openGallery() {
+            const galleryWindow = window.open('', '_blank', 'width=800,height=600');
+            galleryWindow.document.write('<h1>Galeria zdjęć</h1>');
+
+            // Tworzymy listę zdjęć w galerii
+            images.forEach(image => {
+                galleryWindow.document.write(`
+                    <img src="${image}" alt="Zdjęcie" style="max-width: 100%; margin-top: 10px;">
+                `);
+            });
+        }
+    </script>
+</body>
+</html>
