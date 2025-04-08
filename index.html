@@ -74,16 +74,12 @@
 
     <script>
         let images = [];
+        const totalImages = 10; // Zmień tę liczbę na liczbę zdjęć w folderze
 
-        // Funkcja do pobierania listy zdjęć z serwera
-        fetch('/get-images')
-            .then(response => response.json())
-            .then(data => {
-                images = data.map(image => '/images/' + image);  // Tworzymy pełną ścieżkę do obrazów
-            })
-            .catch(error => {
-                console.error('Błąd podczas pobierania zdjęć:', error);
-            });
+        // Generowanie tablicy nazw plików
+        for (let i = 1; i <= totalImages; i++) {
+            images.push(`/images/${i}.png`);
+        }
 
         // Funkcja do pokazania losowego zdjęcia
         function showRandomImage() {
@@ -113,7 +109,7 @@
             // Tworzymy listę zdjęć w galerii
             images.forEach(image => {
                 galleryWindow.document.write(`
-                    <img src="${image}" alt="Zdjęcie">
+                    <img src="${image}" alt="Zdjęcie" style="max-width: 100%; margin-top: 10px;">
                 `);
             });
 
