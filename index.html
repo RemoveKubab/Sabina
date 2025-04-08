@@ -47,18 +47,17 @@
             margin-top: 30px;
         }
         #randomImageContainer {
-            margin-bottom: 20px; /* Dodatkowa przestrzeń między zdjęciem a przyciskami */
+            margin-bottom: 20px;
         }
         #randomImage {
             display: block;
-            margin: 0 auto; /* Wyśrodkowanie zdjęcia */
+            margin: 0 auto;
         }
     </style>
 </head>
 <body>
     <h1>Sabina kochanie moje</h1>
-    <p>Nie wyobrażam sobie życia bez ciebie, dziękuję za to, że jesteś, za wszystkie piękne chwile spędzone z tobą, za te głębsze jak i te mniej poważne rozmowy, za 
-    oparcie, które w tobie mam, za to, że dzięki tobie jestem najlepszą wersją siebie, nadajesz mi sens życia, kochanie moje.</p>
+    <p>Nie wyobrażam sobie życia bez ciebie, dziękuję za to, że jesteś, za wszystkie piękne chwile spędzone z tobą, za te głębsze jak i te mniej poważne rozmowy, za oparcie, które w tobie mam, za to, że dzięki tobie jestem najlepszą wersją siebie, nadajesz mi sens życia, kochanie moje.</p>
 
     <!-- Miejsce na wyświetlenie losowego zdjęcia -->
     <div id="randomImageContainer">
@@ -74,15 +73,25 @@
     <h1>Kocham cię</h1>
 
     <script>
-        // Tablica z obrazkami, które będą losowane
-        const images = [
-            '1.jpg',
-            '2.jpg',
-            '3.jpg'
-        ];
+        let images = [];
+
+        // Funkcja do pobierania listy zdjęć z serwera
+        fetch('/get-images')
+            .then(response => response.json())
+            .then(data => {
+                images = data.map(image => '/images/' + image);  // Tworzymy pełną ścieżkę do obrazów
+            })
+            .catch(error => {
+                console.error('Błąd podczas pobierania zdjęć:', error);
+            });
 
         // Funkcja do pokazania losowego zdjęcia
         function showRandomImage() {
+            if (images.length === 0) {
+                alert('Brak dostępnych zdjęć');
+                return;
+            }
+
             // Losowanie indeksu z tablicy
             const randomIndex = Math.floor(Math.random() * images.length);
             const randomImage = images[randomIndex];
@@ -99,13 +108,16 @@
         function openGallery() {
             const galleryWindow = window.open('', '_blank', 'width=800,height=600');
             galleryWindow.document.write('<h1>Galeria zdjęć</h1>');
+            galleryWindow.document.write('<div class="gallery">');
 
             // Tworzymy listę zdjęć w galerii
             images.forEach(image => {
                 galleryWindow.document.write(`
-                    <img src="${image}" alt="Zdjęcie" style="max-width: 100%; margin-top: 10px;">
+                    <img src="${image}" alt="Zdjęcie">
                 `);
             });
+
+            galleryWindow.document.write('</div>');
         }
     </script>
 </body>
